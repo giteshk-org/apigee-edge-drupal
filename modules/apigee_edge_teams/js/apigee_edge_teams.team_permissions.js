@@ -22,7 +22,7 @@
  *
  * Modified version of Drupal core's user.permissions.js.
  */
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   Drupal.behaviors.apigee_edge_teams_team_permissions = {
     attach: function attach(context) {
       var self = this;
@@ -60,4 +60,4 @@
       });
     }
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

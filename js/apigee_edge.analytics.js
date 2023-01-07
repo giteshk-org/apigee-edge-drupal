@@ -19,7 +19,7 @@
  * @file
  * Javascript functions related to the Analytics page of app entities.
  */
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal, drupalSettings, once) {
 
   'use strict';
 
@@ -36,7 +36,7 @@
    * @see {@link https://developers.google.com/chart|Google Charts}
    */
   Drupal.behaviors.apigeeEdgeAnalyticsDraw = {
-    attach: function attach(context, drupalSettings) {   
+    attach: function attach(context, drupalSettings) {
       $(once('load_google_chart', 'body', context)).each(function () {
         var metric = drupalSettings.analytics.metric;
         var timestamps = drupalSettings.analytics.timestamps;

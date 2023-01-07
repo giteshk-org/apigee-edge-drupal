@@ -22,7 +22,7 @@
  *
  * Modified version of Core's user.permissions.js.
  */
-(function ($, Drupal) {
+(function ($, Drupal, once) {
 
   'use strict';
 
@@ -64,4 +64,4 @@
       });
     }
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);
