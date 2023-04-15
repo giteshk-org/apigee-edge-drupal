@@ -28,6 +28,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        include:
+          - php-version: "8.1"
+            drupal-core: "10.0.x"
+          - php-version: "8.2"
+            drupal-core: "10.0.x"
+          - php-version: "8.1"
+            drupal-core: "10.1.x"
+          - php-version: "8.2"
+            drupal-core: "10.1.x"
         php-version:
           - "7.4"
           - "8.0"
@@ -36,7 +45,6 @@ jobs:
           # Should update the following as the minimum supported version from Drupal.org
           - "9.4.x"
           - "9.5.x"
-          - "10.0.x"
 
     steps:
 
@@ -89,9 +97,8 @@ jobs:
         composer config --no-plugins allow-plugins.composer/package-versions-deprecated true
         composer config --no-plugins allow-plugins.cweagans/composer-patches true
         composer config --no-plugins allow-plugins.php-http/discovery true
-        composer require --dev drush/drush
         composer config minimum-stability dev
-        composer require drupal/rules:3.0.0-alpha7
+        composer require 'drupal/rules:3.x-dev@dev'
         composer require wikimedia/composer-merge-plugin
         composer config --json extra.merge-plugin.require '["modules/contrib/apigee_edge/composer.json"]'
         composer config platform.php ${{ matrix.php-version }}
@@ -109,6 +116,7 @@ jobs:
         php -d sendmail_path=$(which true); vendor/bin/drush --yes -v site:install minimal --db-url="$SIMPLETEST_DB"
         vendor/bin/drush pm:enable apigee_edge -y
         vendor/bin/drush runserver 8000 &
+        vendor/bin/drush status
 
     - name: "PHPCS"
       run: |
